@@ -25,7 +25,24 @@ public class MainActivity extends AppCompatActivity {
     setContentView(R.layout.activity_main);
 
 
+//    check for user
 
+    /*
+
+    */
+
+    ParseUser.logOut();
+
+    if (ParseUser.getCurrentUser() != null) {
+      Log.i("User", " is logged in with username: " + ParseUser.getCurrentUser().getUsername());
+    } else {
+      Log.i("User", " is NOT logged in ");
+    }
+
+
+  // Log user in
+
+    /*
     ParseUser.logInInBackground("steve@chesnowitx.com", "password", new LogInCallback() {
       @Override
       public void done(ParseUser user, ParseException e) {
@@ -36,6 +53,9 @@ public class MainActivity extends AppCompatActivity {
         }
       }
     });
+
+    */
+
 
     // Sign user in
     /*
