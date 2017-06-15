@@ -40,6 +40,11 @@ public class MainActivity extends AppCompatActivity {
       @Override
       public void done(ParseObject object, ParseException e) {
         if (e == null && object != null) {
+
+          object.put("status", "inSleeper");  // update
+          object.put("timeInStatus", 1.30);  // update
+          object.saveEventually();
+
           Log.i("Email Value --> ", object.getString("userEmail"));
           Log.i("Status Value --> ", object.getString("status"));
           Log.i("Time in status --> ", Double.toString(object.getDouble("timeInStatus")));
