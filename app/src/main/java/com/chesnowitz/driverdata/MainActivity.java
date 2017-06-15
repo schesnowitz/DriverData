@@ -4,11 +4,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.SaveCallback;
+
+import java.text.NumberFormat;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -16,38 +20,28 @@ public class MainActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
-/*
-    final ParseObject driverData = new ParseObject("DriverStatus");
-    driverData.put("userEmail", "email@email.com");
-    driverData.put("status", "onDuty");
-    driverData.put("timeInStatus", 1.75);
-    driverData.saveEventually(new SaveCallback() {
+
+    ParseQuery<ParseObject> query = ParseQuery.getQuery("DriverStatus");
+
+    /*
+      Get the Data we want...
+    */
+    query.whereEqualTo("userEmail", "email1@example.com");
+    query.setLimit(5);
+
+    query.findInBackground(new FindCallback<ParseObject>() {
       @Override
-      public void done(ParseException e) {
-        if (e == null) {
-          Log.i("Driver -->", driverData.toString());
-        } else {
-          Log.i("Driver -->", e.toString());
-        }
-      }
-    });
-*/
+      public void done(List<ParseObject> objects, ParseException e) {
+        if (e == null && objects != null) {
+          Log.i("Data ->", "Items " + objects.size() + " objects");
 
-    ParseQuery<ParseObject> parseQuery = ParseQuery.getQuery("DriverStatus");
-
-    // gets item by the id -- id is auto created
-    parseQuery.getInBackground("cTqg4JRCy1", new GetCallback<ParseObject>() {
-      @Override
-      public void done(ParseObject object, ParseException e) {
-        if (e == null && object != null) {
-
-          object.put("status", "inSleeper");  // update
-          object.put("timeInStatus", 1.30);  // update
-          object.saveEventually();
-
-          Log.i("Email Value --> ", object.getString("userEmail"));
-          Log.i("Status Value --> ", object.getString("status"));
-          Log.i("Time in status --> ", Double.toString(object.getDouble("timeInStatus")));
+          if (objects.size() > 0) {
+            for (ParseObject object : objects) {
+              Log.i("status", object.getString("status"));
+              Log.i("timeInStatus", Double.toString(object.getDouble("timeInstatus")));
+              Log.i("EMAIL", object.getString("userEmail"));
+            }
+          }
         } else {
 
         }
