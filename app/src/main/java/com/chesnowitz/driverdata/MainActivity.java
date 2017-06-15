@@ -9,7 +9,9 @@ import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 import com.parse.SaveCallback;
+import com.parse.SignUpCallback;
 
 import java.text.NumberFormat;
 import java.util.List;
@@ -21,31 +23,23 @@ public class MainActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
-    ParseQuery<ParseObject> query = ParseQuery.getQuery("DriverStatus");
+    ParseUser user = new ParseUser();
 
-    /*
-      Get the Data we want...
-    */
-    query.whereEqualTo("userEmail", "email1@example.com");
-    query.setLimit(5);
+    user.setUsername("steve@chesnowitx.com");
+    user.setPassword("password");
 
-    query.findInBackground(new FindCallback<ParseObject>() {
+    user.signUpInBackground(new SignUpCallback() {
       @Override
-      public void done(List<ParseObject> objects, ParseException e) {
-        if (e == null && objects != null) {
-          Log.i("Data ->", "Items " + objects.size() + " objects");
-
-          if (objects.size() > 0) {
-            for (ParseObject object : objects) {
-              Log.i("status", object.getString("status"));
-              Log.i("timeInStatus", Double.toString(object.getDouble("timeInstatus")));
-              Log.i("EMAIL", object.getString("userEmail"));
-            }
-          }
+      public void done(ParseException e) {
+        if (e == null) {
+          Log.i("Sign Up", "Success");
         } else {
+          Log.i("Sign Up", "Failure");
+          Log.i("Errors", e.getStackTrace().toString());
 
         }
       }
     });
+
   }
 }
