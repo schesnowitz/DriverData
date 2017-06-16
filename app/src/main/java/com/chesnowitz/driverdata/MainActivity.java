@@ -1,12 +1,16 @@
 package com.chesnowitz.driverdata;
 
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +35,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
   TextView changeSignUpRegister;
   EditText usernameInput;
   EditText passwordInput;
+
+
   public void signUp (View view) {
 
     usernameInput = (EditText) findViewById(R.id.usernameInput);
@@ -95,8 +101,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     changeSignUpRegister.setOnClickListener(this);
     passwordInput = (EditText) findViewById(R.id.passwordInput);
 
+// hides keyboard when background clicked
+    findViewById(R.id.mainLayout).setOnTouchListener(new View.OnTouchListener() {
+      @Override
+      public boolean onTouch(View v, MotionEvent event) {
+        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        return true;
+      }
+    });
+
     passwordInput.setOnKeyListener(this);
-    
   }
 
 
@@ -120,10 +135,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
   @Override
   public boolean onKey(View view, int i, KeyEvent keyEvent) {
 
-//    checks to see what key clicked will submit from keyboard
+//    checks to see if enter key clicked on keyboard -- submits from keyboard
     if (i == KeyEvent.KEYCODE_ENTER && keyEvent.getAction() == KeyEvent.ACTION_DOWN) {
       signUp(view);
     }
     return false;
   }
+
 }
