@@ -3,6 +3,7 @@ package com.chesnowitz.driverdata;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,16 +25,16 @@ import org.w3c.dom.Text;
 import java.text.NumberFormat;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, View.OnKeyListener {
 
   Boolean registerMode = true;
   TextView changeSignUpRegister;
-
-
+  EditText usernameInput;
+  EditText passwordInput;
   public void signUp (View view) {
 
-    EditText usernameInput = (EditText) findViewById(R.id.usernameInput);
-    EditText passwordInput = (EditText) findViewById(R.id.passwordInput);
+    usernameInput = (EditText) findViewById(R.id.usernameInput);
+    passwordInput = (EditText) findViewById(R.id.passwordInput);
 //    Button bSignup = (Button) findViewById(R.id.bSignUp);
 
     if (usernameInput.getText().toString().matches("") ||
@@ -92,7 +93,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     changeSignUpRegister = (TextView) findViewById(R.id.changeSignUpRegister);
     changeSignUpRegister.setOnClickListener(this);
+    passwordInput = (EditText) findViewById(R.id.passwordInput);
 
+    passwordInput.setOnKeyListener(this);
     
   }
 
@@ -112,5 +115,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         changeSignUpRegister.setText("Log In Here...");
       }
      }
+  }
+
+  @Override
+  public boolean onKey(View view, int i, KeyEvent keyEvent) {
+
+//    checks to see what key clicked will submit from keyboard
+    if (i == KeyEvent.KEYCODE_ENTER && keyEvent.getAction() == KeyEvent.ACTION_DOWN) {
+      signUp(view);
+    }
+    return false;
   }
 }
