@@ -1,5 +1,6 @@
 package com.chesnowitz.driverdata;
 
+import android.content.Intent;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -65,6 +66,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
           public void done(ParseException e) {
             if (e == null) {
               Log.i("Signup", " Success!");
+
+//              Redirecting user after sign up
+
+              Intent intent = new Intent(MainActivity.this, LocationActivity.class);
+              startActivity(intent);
+
             } else {
 //            using e.getMessage() to throw an error
               Log.i("Signup", e.getMessage());
@@ -80,6 +87,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                   public void done(ParseUser user, ParseException e) {
                     if (user != null) {
                       Log.i("Login", "Success");
+
+//                      Redirect after log intent
+                      Intent intent = new Intent(MainActivity.this, LocationActivity.class);
+                      startActivity(intent);
+
+
                     } else {
                       Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
                       Log.i("Login", "Failed");
