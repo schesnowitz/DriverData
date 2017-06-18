@@ -68,9 +68,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
               Log.i("Signup", " Success!");
 
 //              Redirecting user after sign up
+              if (ParseUser.getCurrentUser() != null) {
+                Intent intent = new Intent(MainActivity.this, LocationActivity.class);
+                startActivity(intent);
+              }
 
-              Intent intent = new Intent(MainActivity.this, LocationActivity.class);
-              startActivity(intent);
 
             } else {
 //            using e.getMessage() to throw an error
