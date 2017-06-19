@@ -61,8 +61,6 @@ public class LocationActivity extends AppCompatActivity {
       public void onLocationChanged(Location location) {
         Log.i("Location", location.toString());
 
-
-
       }
 
       @Override
@@ -102,23 +100,17 @@ public class LocationActivity extends AppCompatActivity {
 //      we have permission
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
 
-        lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-
-        if (lastKnownLocation != null) {
-          ParseObject location = new ParseObject("Location");
-          location.put("userEmail", ParseUser.getCurrentUser().getEmail());
-          ParseGeoPoint geoPoint = new ParseGeoPoint(lastKnownLocation.getLatitude(),
-                  lastKnownLocation.getLongitude());
-
-          location.put("coordinates", geoPoint);
-
-          location.saveEventually(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-              
-            }
-          });
-        }
+//        lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+//
+//        if (lastKnownLocation != null) {
+//          ParseObject location = new ParseObject("Location");
+//          location.put("userEmail", ParseUser.getCurrentUser().getEmail());
+//          ParseGeoPoint geoPoint = new ParseGeoPoint(lastKnownLocation.getLatitude(),
+//                  lastKnownLocation.getLongitude());
+//
+//          location.put("coordinates", geoPoint);
+//
+//        }
       }
     }
   }
