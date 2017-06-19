@@ -59,8 +59,12 @@ public class LocationActivity extends AppCompatActivity {
     locationListener = new LocationListener() {
       @Override
       public void onLocationChanged(Location location) {
+        
         Log.i("Location", location.toString());
+        ParseUser.getCurrentUser().put("location",
+                new ParseGeoPoint(location.getLatitude(), location.getLongitude()));
 
+        ParseUser.getCurrentUser().saveEventually();
       }
 
       @Override
